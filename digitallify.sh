@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+ZBARIMG=zbarimg
+
 if [ "$1" = "-h" ]; then
   echo "usage: digitallify.sh <outputfile> <images_directory>"
   exit 0
@@ -17,6 +19,16 @@ dir="${INPUT_DIR:-$cur}$2"
 
 files=$(ls "$dir")
 
+# L
+#chunk_size=2953
+# M
+#chunk_size=2331
+# Q
+chunk_size=1663
+# H
+#chunk_size=1273
+
+
 cd "$dir"
 
 for f in $files
@@ -26,7 +38,9 @@ do
   noext=${f%.*}
   chunk=$(echo $noext |rev | cut -f 1 -d '-' | rev)
 
-  zbarimg --raw -Sbinary --quiet $f | head -c 2953 > "$chunk-$noext.chunk"
+  echo File: ${f}
+  ${ZBARIMG} --raw -Sbinary --quiet ${f} | head -c ${chunk_size} > "$chunk-$noext.chunk"
+  
 done
 
 echo $(ls | grep ".*\.chunk$" | sort)

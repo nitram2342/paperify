@@ -38,7 +38,16 @@ echo $(pwd)
 sha=$(sha1sum "$file" | cut -f 1 -d ' ')
 date=$(date -u +%Y-%m-%dT%H:%M:%S+00:00)
 
-cat "$file" | split -d -b 2953 -a3 - "$dir/$prefix"
+# L
+#chunk_size=2953
+# M
+#chunk_size=2331
+# Q
+chunk_size=1663
+# H
+#chunk_size=1273
+
+cat "$file" | split -d -b ${chunk_size} -a3 - "$dir/$prefix"
 
 cd "$dir"
 
@@ -51,8 +60,10 @@ do
   chunksha=$(sha1sum "$f" | cut -f 1 -d ' ')
 
   out="${f/\ /_}.png"
-  cat "$f" | qrencode --8bit -v 40 --size=13 --margin=1 --output "$out"
-  convert -size 2490x3510 xc:white \( $out -gravity center \) -composite \
+  cat "$f" | qrencode --8bit -v 40 --size=13 --margin=1 -l Q --output "$out"
+  echo convert
+  # size 2490x3510
+  convert -size 2863x4036 xc:white \( $out -gravity center \) -composite \
     -font $FONT -pointsize 72 -gravity northwest -annotate +100+200 "FILE: $filename\n\nCHUNK: $f\n\nTOTAL CHUNKS: $count" \
     -gravity southwest -pointsize 41 -annotate +100+300 "CHUNK ${f##*-} SHA1: $chunksha\n\nFINAL SHA1: $sha" \
     -gravity northeast -pointsize 41 -annotate +100+130 "$date" \
