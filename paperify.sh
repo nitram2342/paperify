@@ -68,7 +68,7 @@ do
     -gravity southwest -pointsize 41 -annotate +100+300 "CHUNK ${f##*-} SHA1: $chunksha\n\nFINAL SHA1: $sha" \
     -gravity northeast -pointsize 41 -annotate +100+130 "$date" \
     -gravity southeast -pointsize 41 -annotate +100+150 "$comment" \
-    -gravity southwest -pointsize 41 -annotate +100+150 "gitlab.com/alisinabh/paperify" $out
+    -gravity southwest -pointsize 41 -annotate +100+150 "gitlab.com/nitram2342/paperify" $out
 
   rm "$f"
 done
