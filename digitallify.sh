@@ -19,14 +19,6 @@ dir="${INPUT_DIR:-$cur}$2"
 
 files=$(ls "$dir")
 
-# L
-#chunk_size=2953
-# M
-#chunk_size=2331
-# Q
-chunk_size=1663
-# H
-#chunk_size=1273
 
 
 cd "$dir"
@@ -39,7 +31,7 @@ do
   chunk=$(echo $noext |rev | cut -f 1 -d '-' | rev)
 
   echo File: ${f}
-  ${ZBARIMG} --raw -Sbinary --quiet ${f} | head -c ${chunk_size} > "$chunk-$noext.chunk"
+  ${ZBARIMG} --raw -Sbinary --quiet ${f} > "$chunk-$noext.chunk"
   
 done
 
