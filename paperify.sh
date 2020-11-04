@@ -84,8 +84,16 @@ do
 done
 
 # join pdf files, 
-gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite "-sOutputFile=${filename}.pdf" _*.pdf
-# pdfunite _*.pdf "${filename}.pdf"
+if ! gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite "-sOutputFile=${filename}.pdf" _*.pdf
+then
+    echo Program gs (ghostscript) not found. Try to use pdfunite.
+    if ! pdfunite _*.pdf "${filename}.pdf"
+    then
+	echo Failed to execute pdfunite, too. Please install it
+	exit
+    fi
+    
+fi
 rm _*.pdf
 
 echo ""
