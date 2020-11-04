@@ -14,7 +14,9 @@ Make sure you have these binaries installed on your system.
 
  - `qrencode` (qrencode)
  - `convert` (imagemagick)
+ - ``gs` (ghostscript) or `pdfunite` to combine QR code images to a PDF for easier printing.
  - `zbarimg` (zbar >= 0.23.1) __only for decoding with digitallify.sh__
+ - `scanimage` (sane-utils) __only as a helper for scanning images__
  
 **Zbar**: Binary support is just added in zbar `0.23.1` and not supported in earlier versions.
 Please verify that your zbar version is higher or equal to `0.23.1`. You can do that by running 
