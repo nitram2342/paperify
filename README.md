@@ -43,16 +43,32 @@ wget https://github.com/alisinabh/paperify/archive/master.zip -O paperify.zip &&
 Or you can use paperify's Docker image at alisinabh/paperify. More details below.
 
 ## Usage
+
+### Backup
+
+Creates `FILE-qr` directory with generated QR codes and a PDF file (if possible) inside.
+Then you can print those files and keep them. If you want to increase the error correction
+level use option `-L` (default, low error correction level, 2953 bytes per page, 7 % can
+be restored), `-M` (2331 bytes per page, 15 % can be restored), `-Q` (1663 bytes per page,
+25 % of data can be restored), or `-H` (highest error correction level, 1273 bytes per
+page, 30% of data can be restored).
+
 ```
-# Creates FILE-qr directory with generated qr codes inside.
-# Then you can print those files and store them.
-./paperify.sh FILE
+./paperify.sh [options] FILE
+```
 
 
-# Reads all files inside the DIRECTORY which you have all your
-# scanned pages inside. Make sure the file namings are correct 
+### Restore
+
+Scan your pages. If you use SANE tools, you can use the script `scanimages.sh` which scans page by page.
+Afterwards, use `digitalify.sh` to parse QR codes in all image files from `DIRECTORY` and to reconstruct
+chunks into `OUTPUT_FILE`. Make sure input file names are correct. 
+
+```
 ./digitalify.sh OUTPUT_FILE DIRECTORY
 ```
+
+Finally, verify the SHA-1 sum.
 
 ### Use with Docker
 
